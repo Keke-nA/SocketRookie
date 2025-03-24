@@ -1,5 +1,5 @@
 {
-    "cmake.sourceDirectory": "/home/gao/code/SoketRookie/socket基础通信",
+    "cmake.sourceDirectory": "/home/gao/code/SocketRookie/socket基础通信",
     "files.associations": {
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
