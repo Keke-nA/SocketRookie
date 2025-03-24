@@ -38,8 +38,7 @@ class ServerSocket {
         skaddr_in.sin_addr.s_addr = htonl(INADDR_ANY);
         skaddr_in.sin_port = htons(my_port);
 
-        if (bind(my_sktfd, (struct sockaddr*)&skaddr_in, sizeof(skaddr_in)) !=
-            0) {
+        if (bind(my_sktfd, (struct sockaddr*)&skaddr_in, sizeof(skaddr_in)) != 0) {
             perror("bind");
             my_sktfd = -1;
             close(my_sktfd);
@@ -56,8 +55,7 @@ class ServerSocket {
     bool accept() {
         struct sockaddr_in caddr;
         socklen_t addrlen = sizeof(caddr);
-        if ((my_clientfd = ::accept(my_sktfd, (struct sockaddr*)&caddr,
-                                    &addrlen)) == -1) {
+        if ((my_clientfd = ::accept(my_sktfd, (struct sockaddr*)&caddr, &addrlen)) == -1) {
             return false;
         }
         my_ip = inet_ntoa(caddr.sin_addr);
@@ -110,10 +108,8 @@ class ServerSocket {
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        std::cout
-            << "Using:./demo2 通讯端口\nExample:./demo2 5005\n\n";  // 端口大于1024，不与其它的重复。
-        std::cout
-            << "注意:运行服务端程序的Linux系统的防火墙必须要开通5005端口。\n";
+        std::cout << "Using:./demo2 通讯端口\nExample:./demo2 5005\n\n";  // 端口大于1024，不与其它的重复。
+        std::cout << "注意:运行服务端程序的Linux系统的防火墙必须要开通5005端口。\n";
         std::cout << "      如果是云服务器，还要开通云平台的访问策略。\n\n";
         return -1;
     }
