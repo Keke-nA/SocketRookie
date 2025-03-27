@@ -12,7 +12,7 @@
 // 初始化服务端的监听端口。
 int initserver(int port);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     if (argc != 2) {
         printf("usage: ./tcpepoll port\n");
         return -1;
@@ -31,18 +31,18 @@ int main(int argc, char *argv[]) {
     int epollfd = epoll_create(1);
 
     // 为服务端的listensock准备读事件。
-    epoll_event ev;          // 声明事件的数据结构。
-    ev.data.fd = listensock; // 指定事件的自定义数据，会随着epoll_wait()返回的事件一并返回。
+    epoll_event ev;           // 声明事件的数据结构。
+    ev.data.fd = listensock;  // 指定事件的自定义数据，会随着epoll_wait()返回的事件一并返回。
     // ev.data.ptr=(void*)"超女";   //
     // 指定事件的自定义数据，会随着epoll_wait()返回的事件一并返回。
-    ev.events = EPOLLIN; // 打算让epoll监视listensock的读事件。
+    ev.events = EPOLLIN;  // 打算让epoll监视listensock的读事件。
 
     epoll_ctl(epollfd, EPOLL_CTL_ADD, listensock,
-              &ev); // 把需要监视的socket和事件加入epollfd中。
+              &ev);  // 把需要监视的socket和事件加入epollfd中。
 
-    epoll_event evs[10]; // 存放epoll返回的事件。
+    epoll_event evs[10];  // 存放epoll返回的事件。
 
-    while (true) // 事件循环。
+    while (true)  // 事件循环。
     {
         // 等待监视的socket有事件发生。
         int infds = epoll_wait(epollfd, evs, 10, -1);
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
         }
 
         // 如果infds>0，表示有事件发生的socket的数量。
-        for (int ii = 0; ii < infds; ii++) // 遍历epoll返回的数组evs。
+        for (int ii = 0; ii < infds; ii++)  // 遍历epoll返回的数组evs。
         {
             // printf("ptr=%s,events=%d\n",evs[ii].data.ptr,evs[ii].events);
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
             if (evs[ii].data.fd == listensock) {
                 struct sockaddr_in client;
                 socklen_t len = sizeof(client);
-                int clientsock = accept(listensock, (struct sockaddr *)&client, &len);
+                int clientsock = accept(listensock, (struct sockaddr*)&client, &len);
 
                 printf("accept client(socket=%d) ok.\n", clientsock);
 
@@ -78,12 +78,12 @@ int main(int argc, char *argv[]) {
                 epoll_ctl(epollfd, EPOLL_CTL_ADD, clientsock, &ev);
             } else {
                 // 如果是客户端连接的socke有事件，表示有报文发过来或者连接已断开。
-                char buffer[1024]; // 存放从客户端读取的数据。
+                char buffer[1024];  // 存放从客户端读取的数据。
                 memset(buffer, 0, sizeof(buffer));
                 if (recv(evs[ii].data.fd, buffer, sizeof(buffer), 0) <= 0) {
                     // 如果客户端的连接已断开。
                     printf("client(eventfd=%d) disconnected.\n", evs[ii].data.fd);
-                    close(evs[ii].data.fd); // 关闭客户端的socket
+                    close(evs[ii].data.fd);  // 关闭客户端的socket
                     // 从epollfd中删除客户端的socket，如果socket被关闭了，会自动从epollfd中删除，所以，以下代码不必启用。
                     // epoll_ctl(epollfd,EPOLL_CTL_DEL,evs[ii].data.fd,0);
                 } else {
@@ -117,7 +117,7 @@ int initserver(int port) {
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port = htons(port);
 
-    if (bind(sock, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
+    if (bind(sock, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
         perror("bind() failed");
         close(sock);
         return -1;
