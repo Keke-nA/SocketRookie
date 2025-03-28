@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     int epollfd = epoll_create(1);
     struct epoll_event ev;
     ev.data.fd = listen_sock;
-    ev.events = EPOLLIN;
+    ev.events = EPOLLIN|EPOLLET;
 
     epoll_ctl(epollfd, EPOLL_CTL_ADD, listen_sock, &ev);
     epoll_event evs[10];

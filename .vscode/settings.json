@@ -1,5 +1,5 @@
 {
-    "cmake.sourceDirectory": "/home/gao/code/SocketRookie",
+    "cmake.sourceDirectory": "/home/gao/code/SoketRookie",
     "files.associations": {
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
@@ -50,6 +50,16 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "optional": "cpp",
+        "sstream": "cpp",
+        "cinttypes": "cpp",
+        "typeindex": "cpp",
+        "variant": "cpp"
     }
 }

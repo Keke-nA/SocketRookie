@@ -10,6 +10,23 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+int setSocketNonblocking(int sockfd) {
+    // 1. 获取当前文件描述符标志
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    if (flags == -1) {
+        perror("fcntl(F_GETFL) failed");
+        return -1; // 返回错误
+    }
+
+    // 2. 设置非阻塞标志
+    if (fcntl(sockfd, F_SETFL, flags | O_NONBLOCK) == -1) {
+        perror("fcntl(F_SETFL) failed");
+        return -1; // 返回错误
+    }
+
+    return 0; // 成功
+}
+
 int initServer(int port) {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock <= 0) {
